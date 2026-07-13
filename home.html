@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cubos</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, -apple-system, sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Fundo com cubos minimalistas */
+    .bg-cubes {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .cube-line {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      opacity: 0.08;
+    }
+
+    .cube-line svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* Título */
+    h1 {
+      color: #fff;
+      font-size: 4rem;
+      font-weight: 300;
+      letter-spacing: -0.02em;
+      margin-bottom: 75px;
+      text-align: center;
+      position: center;
+      z-index: 1;
+    }
+
+    h1 span {
+      font-weight: 700;
+    }
+
+    .subtitle {
+      color: rgba(255,255,255,0.5);
+      font-size: 1.25rem;
+      margin-bottom: 60px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Botão 3D */
+    .btn-container {
+      position: relative;
+      margin-bottom: 60px;
+      z-index: 1;
+    }
+
+    .btn {
+      position: relative;
+      padding: 24px 64px;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      box-shadow: 
+        0 15px 35px -5px rgba(255,255,255,0.15),
+        0 0 0 1px rgba(255,255,255,0.05);
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 
+        0 25px 50px -12px rgba(255,255,255,0.25),
+        0 0 0 1px rgba(255,255,255,0.1);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 8px;
+      right: 8px;
+      height: 100%;
+      background: rgba(255,255,255,0.2);
+      border-radius: 16px;
+      z-index: -1;
+    }
+
+    /* Regras */
+    .rules {
+      display: flex;
+      gap: 60px;
+      max-width: 800px;
+      flex-wrap: wrap;
+      justify-content: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .rule {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 180px;
+    }
+
+    .rule-icon {
+      width: 80px;
+      height: 80px;
+      margin-bottom: 16px;
+    }
+
+    .rule h3 {
+      color: #fff;
+      font-size: 1.125rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .rule p {
+      color: rgba(255,255,255,0.4);
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+
+    /* Legenda do teclado */
+    .keyboard-hint {
+      color: rgba(255,255,255,0.3);
+      font-size: 0.875rem;
+      margin-top: 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Responsivo */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      .subtitle {
+        font-size: 1rem;
+      }
+      .btn {
+        padding: 20px 48px;
+        font-size: 1.25rem;
+      }
+      .rules {
+        gap: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Fundo com cubos de linhas -->
+  <div class="bg-cubes" id="bgCubes"></div>
+
+  <h1>CUBOS</h1>
+
+  <div class="btn-container">
+    <a href="https://katw24.github.io/cubos/exemplo.html" class="btn">COMEÇAR</a>
+  </div>
+
+  <div class="rules">
+    <!-- Rotacionar -->
+    <div class="rule">
+      <svg class="rule-icon" viewBox="0 0 60 60">
+        <circle cx="30" cy="30" r="12" fill="none" stroke="white" stroke-width="1.5" opacity="0.3"/>
+        <path d="M30 8 L30 16" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <path d="M27 11 L30 8 L33 11" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <path d="M30 52 L30 44" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <path d="M27 49 L30 52 L33 49" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <path d="M8 30 L16 30" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <path d="M11 27 L8 30 L11 33" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <path d="M52 30 L44 30" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <path d="M49 27 L52 30 L49 33" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <path d="M15 15 L21 21" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M45 15 L39 21" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M15 45 L21 39" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M45 45 L39 39" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <h3>Rotacionar</h3>
+      <p>Use os botões ao redor do cubo</p>
+    </div>
+
+    <!-- Ativar -->
+    <div class="rule">
+      <svg class="rule-icon" viewBox="0 0 60 60">
+        <path d="M30 10 L50 20 L50 45 L30 55 L10 45 L10 20 Z" fill="none" stroke="white" stroke-width="1.5"/>
+        <path d="M30 10 L30 32 L10 20" fill="none" stroke="white" stroke-width="1.5"/>
+        <path d="M30 32 L50 20 L50 45 L30 55" fill="none" stroke="white" stroke-width="1.5"/>
+        <circle cx="30" cy="32" r="6" fill="none" stroke="white" stroke-width="1.5" opacity="0.7"/>
+      </svg>
+      <h3>Mover</h3>
+      <p>Clique nos cubos para move-los</p>
+    </div>
+
+    <!-- Formar -->
+    <div class="rule">
+      <svg class="rule-icon" viewBox="0 0 60 60">
+        <path d="M30 10 L50 20 L50 45 L30 55 L10 45 L10 20 Z" fill="none" stroke="white" stroke-width="1.5"/>
+        <path d="M30 10 L30 32 L10 20" fill="none" stroke="white" stroke-width="1.5"/>
+        <path d="M30 32 L50 20 L50 45 L30 55" fill="none" stroke="white" stroke-width="1.5"/>
+        <rect x="22" y="28" width="4" height="4" fill="white" opacity="0.8"/>
+        <rect x="28" y="28" width="4" height="4" fill="white" opacity="0.8"/>
+        <rect x="34" y="28" width="4" height="4" fill="white" opacity="0.8"/>
+        <rect x="28" y="34" width="4" height="4" fill="white" opacity="0.8"/>
+      </svg>
+      <h3>Formar</h3>
+      <p>Faça o mais rápido que puder</p>
+    </div>
+  </div>
+
+
+  <script>
+    // Gerar cubos aleatórios no fundo
+    const bgCubes = document.getElementById('bgCubes');
+    const cubeCount = 25;
+
+    for (let i = 0; i < cubeCount; i++) {
+      const cube = document.createElement('div');
+      cube.className = 'cube-line';
+      cube.style.left = Math.random() * 100 + '%';
+      cube.style.top = Math.random() * 100 + '%';
+      
+      // Tamanho aleatório
+      const size = 30 + Math.random() * 50;
+      cube.style.width = size + 'px';
+      cube.style.height = size + 'px';
+      
+      // Opacidade aleatória
+      cube.style.opacity = 0.03 + Math.random() * 0.08;
+      
+      // Rotação aleatória
+      const rotation = Math.random() * 360;
+      cube.style.transform = `rotate(${rotation}deg)`;
+      
+      cube.innerHTML = `
+        <svg viewBox="0 0 100 100">
+          <path d="M50 5 L90 30 L90 80 L50 105 L10 80 L10 30 Z" fill="none" stroke="white" stroke-width="2"/>
+          <path d="M50 5 L50 55 L10 30" fill="none" stroke="white" stroke-width="2"/>
+          <path d="M50 55 L90 30 L90 80 L50 105" fill="none" stroke="white" stroke-width="2"/>
+        </svg>
+      `;
+      
+      bgCubes.appendChild(cube);
+    }
+  </script>
+</body>
+</html>
